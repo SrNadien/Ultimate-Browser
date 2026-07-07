@@ -1,0 +1,20 @@
+{
+  "key.categories.ultimate_browser": "Ultimate Browser",
+  "key.ultimate_browser.open_browser": "Abrir Navegador",
+  "key.ultimate_browser.toggle_pip": "Alternar Imagen en Imagen",
+  "key.ultimate_browser.scroll_up": "Desplazar Arriba (PiP)",
+  "key.ultimate_browser.scroll_down": "Desplazar Abajo (PiP)",
+  "key.ultimate_browser.toggle_fullscreen": "Alternar Pantalla Completa",
+  "key.ultimate_browser.interact_pip": "Mover/Redimensionar PiP",
+
+  "gui.ultimate_browser.title": "Ultimate Browser",
+  "gui.ultimate_browser.go": "Ir",
+  "gui.ultimate_browser.new_tab": "+ Pestaña",
+  "gui.ultimate_browser.pip_interact": "PiP Interactivo",
+  "gui.ultimate_browser.pip_hint": "Pulsa P para mostrar/ocultar el PiP, B para pantalla completa, M para mover/redimensionar/interactuar",
+  "gui.ultimate_browser.pip_move": "Mover",
+  "gui.ultimate_browser.pip_interact_hint": "M: cerrar / interactuar  -  arrastra el borde para mover o redimensionar",
+
+  "commands.ultimate_browser.web.success": "Se abrió %s para %s",
+  "commands.ultimate_browser.browser.success": "Se abrió el navegador para %s"
+}

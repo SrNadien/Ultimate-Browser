@@ -1,0 +1,20 @@
+{
+  "key.categories.ultimate_browser": "Ultimate Browser",
+  "key.ultimate_browser.open_browser": "Open Browser",
+  "key.ultimate_browser.toggle_pip": "Toggle Picture-in-Picture",
+  "key.ultimate_browser.scroll_up": "Scroll Up (PiP)",
+  "key.ultimate_browser.scroll_down": "Scroll Down (PiP)",
+  "key.ultimate_browser.toggle_fullscreen": "Toggle Fullscreen",
+  "key.ultimate_browser.interact_pip": "Move/Resize PiP",
+
+  "gui.ultimate_browser.title": "Ultimate Browser",
+  "gui.ultimate_browser.go": "Go",
+  "gui.ultimate_browser.new_tab": "+ Tab",
+  "gui.ultimate_browser.pip_interact": "Interactive PiP",
+  "gui.ultimate_browser.pip_hint": "Press P to show/hide PIP, B for fullscreen, M to move/resize/interact",
+  "gui.ultimate_browser.pip_move": "Move",
+  "gui.ultimate_browser.pip_interact_hint": "M: close / interact  -  drag the edge to move or resize",
+
+  "commands.ultimate_browser.web.success": "Opened %s for %s",
+  "commands.ultimate_browser.browser.success": "Opened browser for %s"
+}
