@@ -14,20 +14,20 @@ logo = "logo.png"
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     type = "required"
-    versionRange = "${neo_version}"
+    versionRange = "${neo_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type = "required"
-    versionRange = "${minecraft_version}"
+    versionRange = "${minecraft_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${mod_id}]]
-    modId = "mcef"
+    modId = "rinku"
     type = "required"
-    versionRange = "${mcef_version_id}"
+    versionRange = "[3.0.1,)"
     ordering = "AFTER"
     side = "CLIENT"

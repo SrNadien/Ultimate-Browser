@@ -8,17 +8,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
-/**
- * Wires KeyBindings.INTERACT_PIP ("M") to open/close PipInteractScreen.
- *
- * NOTE: if you already have a client tick handler that consumes
- * OPEN_BROWSER/TOGGLE_PIP, move the INTERACT_PIP block below into that
- * existing handler instead of using this file, to avoid two separate
- * @EventBusSubscriber classes both polling keys every tick.
- *
- * Also double check the modid string below matches your @Mod(...) value —
- * it's assumed to be "ultimate_browser" based on your package name.
- */
+
 @EventBusSubscriber(modid = "ultimate_browser", value = Dist.CLIENT)
 public final class PipInteractionHandler {
 

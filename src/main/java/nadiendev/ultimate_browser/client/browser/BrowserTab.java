@@ -1,28 +1,22 @@
 package nadiendev.ultimate_browser.client.browser;
 
-import com.cinemamod.mcef.MCEF;
-import com.cinemamod.mcef.MCEFBrowser;
+import de.keksuccino.rinku.Rinku;
+import de.keksuccino.rinku.RinkuBrowser;
 
-/**
- * Wraps a single MCEFBrowser instance representing one browser tab.
- *
- * Note: the real MCEFBrowser API (com.cinemamod.mcef) does not expose a
- * getTitle() getter (titles arrive via a CefDisplayHandler callback, not a
- * getter) or a public isClosed(), so both are tracked manually here.
- */
+
 public class BrowserTab {
 
-    private final MCEFBrowser browser;
+    private final RinkuBrowser browser;
     private String title = "New Tab";
     private String url;
     private boolean closed = false;
 
     public BrowserTab(String startUrl, int width, int height, boolean transparent) {
         this.url = startUrl;
-        this.browser = MCEF.createBrowser(startUrl, transparent, width, height);
+        this.browser = Rinku.createBrowser(startUrl, transparent, width, height);
     }
 
-    public MCEFBrowser getBrowser() {
+    public RinkuBrowser getBrowser() {
         return browser;
     }
 
@@ -37,7 +31,7 @@ public class BrowserTab {
     }
 
     /**
-     * MCEFBrowser has no getTitle(); we fall back to showing the URL as
+     * RinkuBrowser has no getTitle(); we fall back to showing the URL as
      * the tab label. Hook a CefDisplayHandler if you want real page titles.
      */
     public String getTitle() {

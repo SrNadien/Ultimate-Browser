@@ -1,10 +1,10 @@
 package nadiendev.ultimate_browser.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import nadiendev.ultimate_browser.client.KeyBindings;
 import nadiendev.ultimate_browser.client.browser.BrowserManager;
 import nadiendev.ultimate_browser.client.browser.BrowserTab;
-import com.cinemamod.mcef.MCEFBrowser;
+import de.keksuccino.rinku.RinkuBrowser;
+import de.keksuccino.rinku.RinkuBrowserTextureBlitter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Button;
@@ -13,10 +13,7 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-/**
- * The main, full-window browser interface: address bar, tab strip, nav buttons,
- * and the rendered Chromium surface for the active tab.
- */
+
 public class BrowserScreen extends Screen {
 
     private static final int TOOLBAR_HEIGHT = 28;
@@ -77,7 +74,7 @@ public class BrowserScreen extends Screen {
 
     /**
      * Converts the logical (GUI-scaled) browser area into the real physical
-     * pixel resolution of the Minecraft window, so MCEF renders the page at
+     * pixel resolution of the Minecraft window, so Rinku renders the page at
      * full sharpness instead of at Minecraft's (often lower) GUI-scale size.
      */
     private int[] physicalBrowserSize(int toolbarY) {
@@ -184,19 +181,16 @@ public class BrowserScreen extends Screen {
     private void renderActiveBrowser(GuiGraphics graphics) {
         BrowserTab active = BrowserManager.get().getActiveTab();
         if (active == null) return;
-        MCEFBrowser browser = active.getBrowser();
+        RinkuBrowser browser = active.getBrowser();
         int y = TABBAR_HEIGHT + TOOLBAR_HEIGHT;
         int w = this.width;
         int h = this.height - y;
         if (!browser.isTextureReady()) return;
-        net.minecraft.resources.ResourceLocation texture = browser.getTextureLocation();
-        int[] tex = physicalBrowserSize(y);
-        RenderSystem.enableBlend();
-        // Destination (w,h) is in logical GUI units; source/texture (tex[0],tex[1])
-        // is the real physical resolution the browser was rendered at, so this
-        // scales down cleanly instead of stretching a low-res texture.
-        graphics.blit(texture, 0, y, w, h, 0, 0, tex[0], tex[1], tex[0], tex[1]);
-        RenderSystem.disableBlend();
+        // Destination (w,h) is in logical GUI units; the blitter reads the real
+        // physical resolution the page was rendered at off the browser's own
+        // renderer, so this scales down cleanly instead of stretching a low-res
+        // texture (and never desyncs from a resize that hasn't landed yet).
+        RinkuBrowserTextureBlitter.blit(graphics, browser, 0, y, w, h);
     }
 
     @Override

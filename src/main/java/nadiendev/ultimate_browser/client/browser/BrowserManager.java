@@ -1,14 +1,13 @@
 package nadiendev.ultimate_browser.client.browser;
 
+import de.keksuccino.rinku.Rinku;
+import nadiendev.ultimate_browser.UltimateBrowserMod;
 import nadiendev.ultimate_browser.config.BrowserConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Singleton manager holding all open browser tabs and the active tab index.
- * Also tracks whether the browser screen or PiP mode is currently shown.
- */
+
 public final class BrowserManager {
 
     private static final BrowserManager INSTANCE = new BrowserManager();
@@ -23,12 +22,16 @@ public final class BrowserManager {
     private boolean pipEnabled = false;
     private boolean fullscreen = false;
 
-    // Defaults are only used until the first clampPipToScreen() call positions
-    // the PiP relative to the real window size (see PipOverlay#render).
+
     private double pipX = 20, pipY = 20, pipWidth = 480, pipHeight = 270;
     private boolean pipPositioned = false;
 
     private BrowserManager() {}
+
+ 
+    public boolean isBrowserAvailable() {
+        return Rinku.isInitialized();
+    }
 
     public void restoreFromConfig() {
         BrowserConfig.State state = BrowserConfig.get();
@@ -38,12 +41,15 @@ public final class BrowserManager {
         pipHeight = state.pip.height;
         pipEnabled = state.pip.enabled;
 
+  
+        if (!isBrowserAvailable()) return;
+
         if (state.tabs.isEmpty()) {
             openTab("https://www.google.com");
         } else {
             for (BrowserConfig.TabState t : state.tabs) {
                 int idx = openTab(t.url);
-                if (t.active) activeIndex = idx;
+                if (t.active && idx >= 0) activeIndex = idx;
             }
         }
     }
@@ -62,7 +68,13 @@ public final class BrowserManager {
         BrowserConfig.save();
     }
 
+    /** @return the new tab's index, or -1 if Rinku isn't ready to serve browsers. */
     public int openTab(String url) {
+        if (!isBrowserAvailable()) {
+            UltimateBrowserMod.LOGGER.warn("Rinku is not initialized yet; cannot open browser tab for {}", url);
+            return -1;
+        }
+
         BrowserTab tab = new BrowserTab(url, (int) pipWidth, (int) pipHeight, false);
         tabs.add(tab);
         activeIndex = tabs.size() - 1;

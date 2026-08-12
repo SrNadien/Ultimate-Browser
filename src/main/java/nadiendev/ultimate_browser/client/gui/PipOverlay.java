@@ -1,20 +1,19 @@
 package nadiendev.ultimate_browser.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import nadiendev.ultimate_browser.client.browser.BrowserManager;
 import nadiendev.ultimate_browser.client.browser.BrowserTab;
-import com.cinemamod.mcef.MCEFBrowser;
+import de.keksuccino.rinku.RinkuBrowser;
+import de.keksuccino.rinku.RinkuBrowserTextureBlitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Draws the small Picture-in-Picture browser window over the HUD when PiP mode
  * is enabled and the full browser screen is not currently open.
  *
- * MCEFBrowser has no draw(PoseStack, ...) convenience method; instead it
- * exposes getTextureLocation() (a ResourceLocation backed by its live pixel
- * buffer) which we blit like any other GUI texture.
+ * RinkuBrowser has no draw(PoseStack, ...) convenience method; Rinku ships
+ * RinkuBrowserTextureBlitter instead, which blits the browser's live texture
+ * with the premultiplied-alpha blend func Chromium's OSR pixels require.
  */
 public final class PipOverlay {
 
@@ -54,14 +53,11 @@ public final class PipOverlay {
         // Border / background
         graphics.fill(x - BORDER, y - BORDER, x + w + BORDER, y + h + BORDER, 0xFF000000);
 
-        MCEFBrowser browser = active.getBrowser();
+        RinkuBrowser browser = active.getBrowser();
         browser.resize(w, h);
 
         if (browser.isTextureReady()) {
-            ResourceLocation texture = browser.getTextureLocation();
-            RenderSystem.enableBlend();
-            graphics.blit(texture, x, y, 0, 0, w, h, w, h);
-            RenderSystem.disableBlend();
+            RinkuBrowserTextureBlitter.blit(graphics, browser, x, y, w, h);
         }
 
         // Hint text below, shown only once (for a few seconds) the first

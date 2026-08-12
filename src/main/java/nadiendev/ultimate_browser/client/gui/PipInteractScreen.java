@@ -1,25 +1,14 @@
 package nadiendev.ultimate_browser.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import nadiendev.ultimate_browser.client.browser.BrowserManager;
 import nadiendev.ultimate_browser.client.browser.BrowserTab;
-import com.cinemamod.mcef.MCEFBrowser;
+import de.keksuccino.rinku.RinkuBrowser;
+import de.keksuccino.rinku.RinkuBrowserTextureBlitter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/**
- * Interactive version of the PiP window, opened with the "M" key.
- *
- * Unlike PipOverlay (a pure HUD drawing with no input), this is a real Screen,
- * so it can receive mouse events to let the player:
- *  - drag the top strip to move the window around
- *  - drag the bottom-right corner to resize it
- *  - click/scroll/type into the page itself everywhere else
- *
- * Pressing M again (or Escape) closes it and goes back to the click-through
- * PipOverlay HUD drawing.
- */
+
 public class PipInteractScreen extends Screen {
 
     private static final int TITLE_BAR_HEIGHT = 14;
@@ -90,17 +79,14 @@ public class PipInteractScreen extends Screen {
         int browserY = y + TITLE_BAR_HEIGHT;
         int browserH = h - TITLE_BAR_HEIGHT;
 
-        MCEFBrowser browser = active.getBrowser();
+        RinkuBrowser browser = active.getBrowser();
         double scale = browserScale();
         int texW = Math.max(1, (int) Math.round(w * scale));
         int texH = Math.max(1, (int) Math.round(browserH * scale));
         browser.resize(texW, texH);
 
         if (browser.isTextureReady()) {
-            RenderSystem.enableBlend();
-            graphics.blit(browser.getTextureLocation(), x, browserY, w, browserH,
-                    0, 0, texW, texH, texW, texH);
-            RenderSystem.disableBlend();
+            RinkuBrowserTextureBlitter.blit(graphics, browser, x, browserY, w, browserH);
         }
 
         // Resize handle (bottom-right corner)

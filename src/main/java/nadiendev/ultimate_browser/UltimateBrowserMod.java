@@ -25,7 +25,7 @@ public class UltimateBrowserMod {
 
         NetworkHandler.register(modEventBus);
 
-        // Server-side / common event: register commands
+        // Server-side 
         NeoForge.EVENT_BUS.addListener(BrowserCommand::onRegisterCommands);
 
         if (FMLEnvironment.dist.isClient()) {
